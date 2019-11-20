@@ -29,7 +29,7 @@ public class Contact {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
-    // "this way, the id column serves as both Primary Key and FK"
+    // @MapsId annotation points out, that the id column serves as both Primary Key and FK
     @MapsId // simply it means that contact.id == customer.id
     private Customer customer;
 
@@ -42,7 +42,9 @@ public class Contact {
     @Column(name = "email")
     private String email;
 
+    /**
+     * NB: the {@link @ElementCollection} annotation creates new table 'contact_phones' in db by Hibernate
+     */
     @ElementCollection
-//    @Column(name = "phones")
     private List<String> phones;
 }

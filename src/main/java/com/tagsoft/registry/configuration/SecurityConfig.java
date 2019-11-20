@@ -65,9 +65,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureUrl("/login?error=true")
                 // controller method GET mapped "/index", and THE ADDRESS WILL BE http://localhost:8082/store/index
                 .defaultSuccessUrl("/index")
-                // controller method POST mapped "/index". But in the same time it must be
-                // <form th:action="@{/login}" method="POST"> in the login.html, and THE ADDRESS WILL BE http://localhost:8082/store/login
-//                .loginProcessingUrl("/index")
                 .usernameParameter("login")
                 .passwordParameter("password")
                 .and()

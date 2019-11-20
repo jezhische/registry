@@ -50,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.
                 authorizeRequests()
-                .antMatchers( "/login", "/registration", "/terriblemistakeofyourlife.html").permitAll()
+                .antMatchers( "/login", "/registration").permitAll()
                 .antMatchers("/free-access").permitAll()
                 .antMatchers("/product-images-uploads/**").hasAuthority("ADMIN")
 //                .anyRequest()

@@ -98,6 +98,7 @@ public class CustomerServiceImplRealDBTest extends BasePostgresConnectingTest {
     }
 
     @Test
+    @Rollback
     public void addRole() {
         customerService.findByLogin(customer.getLogin()).addRoles(roleService.findByRole(RoleEnum.CUSTOMER.toString()));
         assertTrue(customerService.findByLogin(customer.getLogin()).getRoles().contains(
@@ -106,6 +107,7 @@ public class CustomerServiceImplRealDBTest extends BasePostgresConnectingTest {
     }
 
     @Test
+    @Rollback
     public void findByLogin() {
         Customer byLogin = customerService.findByLogin(customer.getLogin());
         assertEquals(customer.getLogin(), byLogin.getLogin());
@@ -113,6 +115,7 @@ public class CustomerServiceImplRealDBTest extends BasePostgresConnectingTest {
     }
 
     @Test
+    @Rollback
     public void findById() {
         Customer byLogin = customerService.findByLogin(customer.getLogin());
         Customer byId = customerService.findById(byLogin.getId());
@@ -120,14 +123,7 @@ public class CustomerServiceImplRealDBTest extends BasePostgresConnectingTest {
     }
 
     @Test
-    public void findAllByRolesContainingOrderByRoles() {
-        Set<Customer> customers = customerService.findAllByRolesContainingOrderByRoles(roleService
-                .findByRole(RoleEnum.CUSTOMER.toString()));
-        assertTrue(customers.contains(customerService.findByLogin(customer.getLogin())));
-        System.out.println("******************************************************" + customers + "**************************");
-    }
-
-    @Test
+    @Rollback
     public void putWithEnabledFalse() {
         Customer byLogin = customerService.findByLogin(customer.getLogin());
         byLogin.setEnabled(false);
@@ -140,6 +136,7 @@ public class CustomerServiceImplRealDBTest extends BasePostgresConnectingTest {
 
 
     @Test
+    @Rollback
     public void deleteByLogin() {
         assertNotNull(customerService.findByLogin(customer.getLogin()));
         Set<Customer> customers = customerService.findAllByRolesContainingOrderByRoles(roleService.findByRole(RoleEnum.CUSTOMER.toString()));
@@ -155,6 +152,7 @@ public class CustomerServiceImplRealDBTest extends BasePostgresConnectingTest {
 // ======================================================================================================== special
 
     @Test
+    @Rollback
     public void deleteCertainCustomer() {
         String certainLogin = "jezhische";
         assertNotNull(customerService.findByLogin(certainLogin));
@@ -163,6 +161,7 @@ public class CustomerServiceImplRealDBTest extends BasePostgresConnectingTest {
     }
 
     @Test
+    @Rollback
     public void putCertainCustomerEnabledTrue() {
         Customer jezhische = customerService.findByLogin("jezhische");
         jezhische.setEnabled(true);
@@ -178,6 +177,7 @@ public class CustomerServiceImplRealDBTest extends BasePostgresConnectingTest {
     }
 
     @Test
+    @Rollback
     public void setAdminAuthority() {
         Customer jezhische = customerService.findByLogin("jezhische");
         Role admin = roleService.findByRole(RoleEnum.ADMIN.toString());
@@ -191,6 +191,7 @@ public class CustomerServiceImplRealDBTest extends BasePostgresConnectingTest {
     }
 
     @Test
+    @Rollback
     public void deleteAdminAuthority() {
         Customer jezhische = customerService.findByLogin("jezhische");
         Role admin = roleService.findByRole(RoleEnum.ADMIN.toString());

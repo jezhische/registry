@@ -1,4 +1,61 @@
 window.onload = function () {
+    // import statesArray from 'us-states-array'
+    let statesArray = [
+        "Alaska",
+        "Alabama",
+        "Arkansas",
+        "American_Samoa",
+        "Arizona",
+        "California",
+        "Colorado",
+        "Connecticut",
+        "District_of_Columbia",
+        "Delaware",
+        "Florida",
+        "Georgia",
+        "Guam",
+        "Hawaii",
+        "Iowa",
+        "Idaho",
+        "Illinois",
+        "Indiana",
+        "Kansas",
+        "Kentucky",
+        "Louisiana",
+        "Massachusetts",
+        "Maryland",
+        "Maine",
+        "Michigan",
+        "Minnesota",
+        "Missouri",
+        "Mississippi",
+        "Montana",
+        "North Carolina",
+        "North Dakota",
+        "Nebraska",
+        "New_Hampshire",
+        "New_Jersey",
+        "New_Mexico",
+        "Nevada",
+        "New_York",
+        "Ohio",
+        "Oklahoma",
+        "Oregon",
+        "Pennsylvania",
+        "Puerto_Rico",
+        "Rhode_Island",
+        "South_Carolina",
+        "South_Dakota",
+        "Tennessee",
+        "Texas",
+        "Utah",
+        "Virginia",
+        "Virgin_Islands",
+        "Vermont",
+        "Washington",
+        "Wisconsin",
+        "West_Virginia",
+        "Wyoming"];
     const COUNTRY_SELECT = document.querySelector('#country-select');
     const USA_SELECTION = document.querySelector('#usa');
     const CANADA_SELECTION = document.querySelector('#canada');
@@ -34,6 +91,7 @@ window.onload = function () {
                     break;
                 case 1: {
                     listenUSA();
+                    // fillStatesSelect();
                     listenUSAStatesSelectionOnchange();
                 }
                     break;
@@ -65,7 +123,17 @@ window.onload = function () {
         };
     }
 
+    function fillStatesSelect() {
+        statesArray.forEach(state => {
+            let option = document.createElement("OPTION");
+            option.value = state;
+            option.innerText = state;
+            USA_STATES_SELECT.append(option);
+        });
+    }
+
 
     listenCountrySelectOnchange();
+    fillStatesSelect();
     // listenUSAStatesSelectionOnchange();
 };

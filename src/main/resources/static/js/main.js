@@ -54,24 +54,6 @@ $(function () {
         });
     }
 
-// ------------------------------------------------
-
-    function hackMessage(password) {
-        $("#hack-message").html('No dear, <span style="color: blue; font-weight: bold">' + password + '</span> does not fit. Come again!');
-        $('#promo-picture').css('visibility', 'visible');
-    }
-
-// ------------------------------------------------
-
-    function unlockButtonBehavior() {
-        let unlockBtn = $('#unlock-btn');
-        unlockBtn.click(function (event) {
-            event.preventDefault();
-            console.log('unlock-btn pushed');
-            unlockRequest();
-        })
-
-    }
 
 // ------------------------------------------------
 

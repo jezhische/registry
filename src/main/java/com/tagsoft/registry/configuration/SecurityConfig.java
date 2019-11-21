@@ -53,8 +53,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers( "/login", "/registration").permitAll()
                 .antMatchers("/free-access").permitAll()
                 .antMatchers("/product-images-uploads/**").hasAuthority("ADMIN")
-//                .anyRequest()
-//                .authenticated()
                 .antMatchers("/index/**").hasAnyAuthority("ADMIN", "CUSTOMER")
                 .anyRequest()
                 .authenticated()
@@ -63,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")
                 .failureUrl("/login?error=true")
-                // controller method GET mapped "/index", and THE ADDRESS WILL BE http://localhost:8082/store/index
+                // controller method GET mapped "/index", and THE ADDRESS WILL BE http://localhost:8080/registry/index
                 .defaultSuccessUrl("/index")
                 .usernameParameter("login")
                 .passwordParameter("password")

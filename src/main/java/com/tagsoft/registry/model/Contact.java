@@ -47,4 +47,10 @@ public class Contact {
      */
     @ElementCollection
     private List<String> states;
+
+    /**
+     * this is the CRUTCH to fill states list from model
+     */
+    @Transient
+    private String crutch;
 }

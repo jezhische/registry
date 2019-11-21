@@ -52,10 +52,20 @@
                             <!--                                <option th:value="a" th:text="Select_Your_Country" th:disabled="disabled" th:selected="true"></option>-->
 
                             <!--    this option has null value, so will be constrained by @NotEmpty String country in Customer class -->
-                            <option value="" class="selected-style" selected><b>Select Your Country</b></option>
+                            <option value="" class="selected-style" selected>Select Your Country</option>
                             <option id="usa" th:value="USA" th:text="USA"></option>
                             <option id="canada" th:value="Canada" th:text="Canada"></option>
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="usa-states-select" class="usa-states-select" style="display: none">
+                            Select at least three states that border with yours</label>
+                            <select id="usa-states-select" class="col-sm-6 col-sm-offset-2" style="display: none">
+<!--                                    th:field="${contact.states}">-->
+                                <option th:value="Nebraska" th:text="Nebraska"></option>
+                                <option th:value="Arisona" th:text="Arisona"></option>
+                            </select>
+
                     </div>
 
                     <div class="form-group">
@@ -68,11 +78,13 @@
                 </div>
 <!-- ********************************* the right half of the page -->
                 <div class="col-md-6">
+<!--                    see registration.js listenSelectOnchange()-->
                     <div id="usa-state-selection"  class="col-md-12 col-md-offset-1" style="display: none">
 
                         <div class="col-md-12 registration-header">The states you chose</div>
                         <div class="col-md-12">Hi from USA</div>
                         <div class="col-md-12">Hi from USA</div>
+                        <input id="crutch-input" type="text" th:field="${contact.crutch}">
                     </div>
 
                     <div id="canadian-province-selection" style="display: none">Hi from Canada</div>

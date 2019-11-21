@@ -43,38 +43,6 @@ public class LoginController {
         return modelAndView;
     }
 
-
-    @GetMapping(value="/registration")
-    public ModelAndView registration(){
-        ModelAndView modelAndView = new ModelAndView();
-        Customer customer = new Customer();
-        // create a model attached to page
-        modelAndView.addObject("customer", customer);
-        modelAndView.setViewName("registration");
-        return modelAndView;
-    }
-
-    @PostMapping(value = "/registration")
-    public ModelAndView createNewUser(@Valid @ModelAttribute(value = "customer") Customer customer, BindingResult bindingResult) {
-        ModelAndView modelAndView = new ModelAndView();
-        Customer saved = customerService.findByLogin(customer.getLogin());
-        if (saved != null) {
-            bindingResult
-                    .rejectValue("login", "error.customer",
-                            "There is already a customer registered with the login provided");
-        }
-        if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("registration");
-        } else {
-            customerService.save(customer);
-            modelAndView.addObject("successMessage", "Customer has been registered successfully");
-            modelAndView.addObject("customer", new Customer());
-            modelAndView.setViewName("registration");
-
-        }
-        return modelAndView;
-    }
-
     @GetMapping(value="/index")
     public ModelAndView home(){
         ModelAndView modelAndView = new ModelAndView();

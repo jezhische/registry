@@ -7,3 +7,8 @@
     font-weight: bold;
     text-align: center;
 }
+.registration-header {
+    font-weight: bold;
+    font-stretch: expanded;
+    background-color: #f7e1b5;
+}

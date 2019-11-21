@@ -18,12 +18,14 @@
     <fieldset>
         <legend>Registration Form</legend>
         <div class="row">
-<!--            can be added something like col-md-offset-3-->
-            <div class="col-md-6">
-                <form autocomplete="off" action="#" th:action="@{/registration}"
-                      th:object="${customer}" method="post" class="form-horizontal"
-                      role="form">
-<!--                    <h2>Registration Form</h2>-->
+            <!--            can be added something like col-md-offset-3-->
+            <!--            <div class="col-md-6">-->
+            <form autocomplete="off" action="#" th:action="@{/registration}"
+                  th:object="${customer}" method="post" class="form-horizontal"
+                  role="form">
+<!-- ******************************** the left half of the page -->
+                <div class="col-md-6">
+                    <!--                    <h2>Registration Form</h2>-->
                     <div class="form-group">
                         <div class="col-sm-9">
                             <label th:if="${#fields.hasErrors('login')}" th:errors="*{login}"
@@ -36,7 +38,7 @@
                     <div class="form-group">
                         <div class="col-sm-9">
                             <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
-                                    class="validation-message"></label>
+                                   class="validation-message"></label>
                             <input type="password" th:field="*{password}"
                                    placeholder="Password" class="form-control"/>
                         </div>
@@ -45,15 +47,15 @@
                     <div class="form-group">
                         <label th:if="${#fields.hasErrors('country')}" th:errors="*{country}"
                                class="validation-message"></label>
-<!--                        <label for="country-select" class="col-sm-offset-2">Select_Your_Country</label>-->
-                            <select th:field="*{country}" id="country-select" class="col-sm-6 col-sm-offset-2">
-<!--                                <option th:value="a" th:text="Select_Your_Country" th:disabled="disabled" th:selected="true"></option>-->
+                        <!--                        <label for="country-select" class="col-sm-offset-2">Select_Your_Country</label>-->
+                        <select th:field="*{country}" id="country-select" class="col-sm-6 col-sm-offset-2">
+                            <!--                                <option th:value="a" th:text="Select_Your_Country" th:disabled="disabled" th:selected="true"></option>-->
 
-<!--    this option has null value, so will be constrained by @NotEmpty String country in Customer class -->
-                                <option value="" class="selected-style" selected><b>Select Your Country</b></option>
-                                <option id="usa" th:value="USA" th:text="USA"></option>
-                                <option id="canada" th:value="Canada" th:text="Canada"></option>
-                            </select>
+                            <!--    this option has null value, so will be constrained by @NotEmpty String country in Customer class -->
+                            <option value="" class="selected-style" selected><b>Select Your Country</b></option>
+                            <option id="usa" th:value="USA" th:text="USA"></option>
+                            <option id="canada" th:value="Canada" th:text="Canada"></option>
+                        </select>
                     </div>
 
                     <div class="form-group">
@@ -63,13 +65,22 @@
                     </div>
 
                     <h2><span class="text-success" th:utext="${successMessage}"></span></h2>
+                </div>
+<!-- ********************************* the right half of the page -->
+                <div class="col-md-6">
+                    <div id="usa-state-selection"  class="col-md-12 col-md-offset-1" style="display: none">
 
-                </form>
-            </div>
+                        <div class="col-md-12 registration-header">The states you chose</div>
+                        <div class="col-md-12">Hi from USA</div>
+                        <div class="col-md-12">Hi from USA</div>
+                    </div>
+
+                    <div id="canadian-province-selection" style="display: none">Hi from Canada</div>
+                </div>
+            </form>
+            <!--            </div>-->
         </div>
     </fieldset>
-    <div id="usa-state-selection" style="display: none">Hi from USA</div>
-    <div id="canadian-province-selection" style="display: none">Hi from Canada</div>
 
     <script src="js/registration.js"></script>
 </div>

@@ -43,8 +43,8 @@ public class Contact {
     private String email;
 
     /**
-     * NB: the {@link @ElementCollection} annotation creates new table 'contact_phones' in db by Hibernate
+     * NB: the {@link @ElementCollection} annotation creates new table 'contact_states' in db by Hibernate
      */
     @ElementCollection
-    private List<String> phones;
+    private List<String> states;
 }

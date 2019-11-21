@@ -11,28 +11,28 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "addresses")
+//@Entity
+//@Table(name = "addresses")
 public class Address {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @Column(name = "id")
     private Long id;
 
-    @Column(name = "city")
+//    @Column(name = "city")
     private String city;
 
-    @Column(name = "street")
+//    @Column(name = "street")
     private String street;
 
-    @Column(name = "house")
+//    @Column(name = "house")
     private int house;
 
-    @Column(name = "apartment")
+//    @Column(name = "apartment")
     private int apartment;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "contact_id")
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "contact_id")
     private Contact contact;
 }

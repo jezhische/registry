@@ -13,13 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class LoginController {
 
-    private final CustomerService customerService;
-
-    @Autowired
-    public LoginController(CustomerService customerService) {
-        this.customerService = customerService;
-    }
-
     @GetMapping(value = "/free-access")
     public ModelAndView letInAnonimous() {
         ModelAndView modelAndView = new ModelAndView();
@@ -37,17 +30,6 @@ public class LoginController {
     public ModelAndView login(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("login");
-        return modelAndView;
-    }
-
-    @GetMapping(value="/index")
-    public ModelAndView home(){
-        ModelAndView modelAndView = new ModelAndView();
-        // NB the way to get access to user data
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Customer customer = customerService.findByLogin(auth.getName());
-        modelAndView.addObject("customer", customer);
-        modelAndView.setViewName("index");
         return modelAndView;
     }
 

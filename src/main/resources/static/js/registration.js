@@ -1,5 +1,6 @@
 window.onload = function () {
     // import statesArray from 'us-states-array'
+
     let statesArray = [
         "Alaska",
         "Alabama",

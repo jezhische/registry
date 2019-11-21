@@ -42,6 +42,12 @@ public class Contact {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "province")
+    private String province;
+
+    @Column(name = "city")
+    private String city;
+
     /**
      * NB: the {@link @ElementCollection} annotation creates new table 'contact_states' in db by Hibernate
      */

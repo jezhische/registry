@@ -1,8 +1,10 @@
 package com.tagsoft.registry.service;
 
 import com.tagsoft.registry.constants.RoleEnum;
+import com.tagsoft.registry.model.Contact;
 import com.tagsoft.registry.model.Customer;
 import com.tagsoft.registry.model.Role;
+import com.tagsoft.registry.repository.ContactRepository;
 import com.tagsoft.registry.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,16 +18,18 @@ import java.util.Set;
 @Transactional
 public class CustomerServiceImpl implements CustomerService {
 
-    private CustomerRepository customerRepository;
-    private RoleService roleService;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final CustomerRepository customerRepository;
+    private final RoleService roleService;
+    private final ContactRepository contactRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
     @Autowired
     public CustomerServiceImpl(CustomerRepository customerRepository, RoleService roleService,
-                               BCryptPasswordEncoder bCryptPasswordEncoder) {
+                               ContactRepository contactRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.customerRepository = customerRepository;
         this.roleService = roleService;
+        this.contactRepository = contactRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
@@ -56,7 +60,11 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void deleteByLogin(String login) {
-        customerRepository.deleteByLogin(login);
+        Customer customer = customerRepository.findByLogin(login);
+        Contact contact = contactRepository.findById(customer.getId()).orElse(null);
+        if (contact != null) contact.setCustomer(null);
+        customerRepository.delete(customer);
+        contactRepository.delete(contact);
     }
 
     @Override

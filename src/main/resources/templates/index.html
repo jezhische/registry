@@ -25,15 +25,19 @@
         <a href="swagger" target="_blank" class="swagger-link">swagger</a>
         <a href="#" target="_blank" class="swagger-link">Edit Your Profile</a>
         <div sec:authorize="hasAuthority('ADMIN')">
-            <!-- SERVER: ProductImageUploadsController: setImagesUploadsView(), GET url: "product-images-uploads" -->
-            <a href="product-images-uploads" class="swagger-link">
-                images-uploads
-                page, admin access only
-            </a>
+            <!-- NOT IMPLEMENTED YET -->
+            <a href="admin-page" class="swagger-link">admin access only</a>
         </div>
         <!--<div><span sec:authorize="hasAuthority('ADMIN')">ADMIN notation</span></div>-->
     </div>
+    <br>
+    <hr>
+    <br>
+    <div id="view-profile-error-text" style="display: none"></div>
+    <button id="view-profile" class="btn btn-lg btn-primary btn-block" style="max-width: 50%">View Profile</button>
+
 </div>
 <script src="js/main.js"></script>
+<script src="js/index.js"></script>
 </body>
 </html>

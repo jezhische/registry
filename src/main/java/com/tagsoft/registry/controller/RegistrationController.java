@@ -25,6 +25,11 @@ public class RegistrationController {
         this.contactService = contactService;
     }
 
+    /**
+     * I don't know either it was a good idea to put two entities in the model.
+     * I could have put there only one CustomerDataDTO instance.
+     * @return
+     */
     @GetMapping(value="/registration")
     public ModelAndView registration(){
         ModelAndView modelAndView = new ModelAndView();

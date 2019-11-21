@@ -42,6 +42,33 @@
                     </div>
 
                     <div class="form-group">
+                        <div class="col-sm-9">
+<!--                            <label th:if="${#fields.hasErrors('name')}" th:errors="${contact.name}"-->
+<!--                                   class="validation-message"></label>-->
+                            <input type="text" th:field="${contact.name}" placeholder="First Name"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-9">
+<!--                            <label th:if="${#fields.hasErrors('lastName')}" th:errors="${contact.lastName}"-->
+<!--                                   class="validation-message"></label>-->
+                            <input type="text" th:field="${contact.lastName}" placeholder="Last Name"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-9">
+<!--                            <label th:if="${#fields.hasErrors('email')}" th:errors="${contact.email}"-->
+<!--                                   class="validation-message"></label>-->
+                            <input type="text" th:field="${contact.email}" placeholder="Email"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label th:if="${#fields.hasErrors('country')}" th:errors="*{country}"
                                class="validation-message"></label>
                         <!--                        <label for="country-select" class="col-sm-offset-2">Select_Your_Country</label>-->

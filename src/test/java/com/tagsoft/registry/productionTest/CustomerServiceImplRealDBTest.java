@@ -19,6 +19,7 @@ import org.springframework.test.annotation.Rollback;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.Assert.*;
@@ -43,7 +44,7 @@ public class CustomerServiceImplRealDBTest extends BasePostgresConnectingTest {
     @Before
     public void setUp() throws Exception {
         customer = Customer.builder()
-                .login("iamthefirst") // iamthesecond
+                .login("iamthesecond") // iamthefirst
                 .password("password")
                 .country("USA")
                 .build();
@@ -77,17 +78,32 @@ public class CustomerServiceImplRealDBTest extends BasePostgresConnectingTest {
     @Test
     @Rollback
     public void saveCustomerOTOContact() throws Exception {
-        Customer saved = customerService.save(customer);
-        Customer byId = customerService.findById(saved.getId());
-        assertEquals(saved, byId);
+        Customer savedCustomer = customerService.save(customer);
+        Customer byId = customerService.findById(savedCustomer.getId());
+        assertEquals(savedCustomer, byId);
         Contact savedContact = contactService.save(contact);
         Contact contactById = contactService.findById(savedContact.getId()).orElse(new Contact());
         assertEquals(savedContact, contactById);
-        assertEquals(savedContact.getId(), saved.getId());
+        assertEquals(savedContact.getId(), savedCustomer.getId());
     }
 
+    @Test
+    @Rollback
+    public void deleteOrphanContact() {
+        Customer savedCustomer = customerService.save(customer);
+        Customer byId = customerService.findById(savedCustomer.getId());
+        assertEquals(savedCustomer, byId);
+        Contact savedContact = contactService.save(contact);
+        Contact contactById = contactService.findById(savedContact.getId()).orElse(new Contact());
+        assertEquals(savedContact, contactById);
+        assertEquals(savedContact.getId(), savedCustomer.getId());
+        Long id = customer.getId();
+        customerService.deleteByLogin(customer.getLogin());
+        assertNull(customerService.findById(id));
+        assertEquals(contactService.findById(id), Optional.empty());
+    }
 
-// =====================================================================================================================
+    // =====================================================================================================================
 // =============================================================================================================== bunch
 
 

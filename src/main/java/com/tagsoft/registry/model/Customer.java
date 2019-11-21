@@ -53,6 +53,10 @@ public class Customer {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
+    @Column
+    @NotEmpty(message = "*Please select your country")
+    private String country;
+
     // contact id will be the same as customer id, so it doesn't need to add "contact" column
 
     public void setRoles(Role... roles) {

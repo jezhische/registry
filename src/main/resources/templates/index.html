@@ -16,6 +16,10 @@
         <input type="submit" class="btn btn-md btn-danger btn-block" name="logout" value="Logout">
     </form>
     <br>
+    <div class="col-md-2">
+        <div><h4>HELLO <span th:utext="${customer.login.toUpperCase()}"></span></h4></div>
+<!--        <div th:if="${customer.login.toLowerCase().equals('guest')}" th:utext="Youre not capable of anything on this page">L</div>-->
+    </div>
     <br>
     <div>
         <a href="swagger" target="_blank" class="swagger-link">swagger</a>
@@ -29,6 +33,7 @@
         </div>
         <!--<div><span sec:authorize="hasAuthority('ADMIN')">ADMIN notation</span></div>-->
     </div>
-</div><script src="js/main.js"></script>
+</div>
+<script src="js/main.js"></script>
 </body>
 </html>

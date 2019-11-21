@@ -14,3 +14,15 @@
 }
 
 .usa-states-select {}
+
+.state {
+    background-color: #00e074;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.round-border {
+    border: 3px solid red;
+    border-radius: 15px;
+    font-stretch: extra-expanded;
+}

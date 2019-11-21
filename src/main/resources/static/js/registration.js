@@ -49,11 +49,19 @@ window.onload = function () {
         USA_STATES_SELECT.style.display = 'block';
         LABEL_FOR_USA_STATES_SELECT.style.display = 'block';
         USA_STATES_SELECT.onchange = function (event) {
-            // let contact = "[[${contact}]]";
-            // let contact = JSON.parse('${contact}');
             let choosenState = USA_STATES_SELECT.value;
             console.log('state: ' + choosenState);
-            CRUTCH.value += choosenState + " ";
+            if (!CRUTCH.value.includes(choosenState)) {
+                CRUTCH.value += choosenState + " ";
+                let element = document.createElement('DIV');
+                element.innerHTML = '<div class="state col-md-12" align="center">'
+                    + choosenState + '<span class="round-border">X</span></div>';
+                element.onclick = function(event) {
+                    this.style.display = 'none';
+                    CRUTCH.value = CRUTCH.value.replace(choosenState + ' ', '');
+                };
+                USA_STATE_SELECTION.append(element);
+            }
         };
     }
 

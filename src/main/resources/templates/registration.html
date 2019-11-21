@@ -18,14 +18,11 @@
     <fieldset>
         <legend>Registration Form</legend>
         <div class="row">
-            <!--            can be added something like col-md-offset-3-->
-            <!--            <div class="col-md-6">-->
             <form autocomplete="off" action="#" th:action="@{/registration}"
                   th:object="${customer}" method="post" class="form-horizontal"
                   role="form">
 <!-- ******************************** the left half of the page -->
                 <div class="col-md-6">
-                    <!--                    <h2>Registration Form</h2>-->
                     <div class="form-group">
                         <div class="col-sm-9">
                             <label th:if="${#fields.hasErrors('login')}" th:errors="*{login}"
@@ -82,15 +79,14 @@
                     <div id="usa-state-selection"  class="col-md-12 col-md-offset-1" style="display: none">
 
                         <div class="col-md-12 registration-header">The states you chose</div>
-                        <div class="col-md-12">Hi from USA</div>
-                        <div class="col-md-12">Hi from USA</div>
-                        <input id="crutch-input" type="text" th:field="${contact.crutch}">
+<!--                        this is the CRUTCH to fill states list from model-->
+                        <input id="crutch-input" type="text" style="display: none" th:field="${contact.crutch}">
+<!--                        <div class="state col-md-12" align="center">Alaska <span class="round-border">X</span></div>-->
                     </div>
 
                     <div id="canadian-province-selection" style="display: none">Hi from Canada</div>
                 </div>
             </form>
-            <!--            </div>-->
         </div>
     </fieldset>
 

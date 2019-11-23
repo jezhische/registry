@@ -1,4 +1,4 @@
-package com.tagsoft.registry.model;
+package com.tagsoft.registry.model.customer;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +12,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "roles")
+@Table(name = "roles",
+        schema = "registry_security")
 public class Role {
 
     @Id

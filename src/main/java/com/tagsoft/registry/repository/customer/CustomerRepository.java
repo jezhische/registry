@@ -1,7 +1,7 @@
-package com.tagsoft.registry.repository;
+package com.tagsoft.registry.repository.customer;
 
-import com.tagsoft.registry.model.Customer;
-import com.tagsoft.registry.model.Role;
+import com.tagsoft.registry.model.customer.Customer;
+import com.tagsoft.registry.model.customer.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -23,5 +23,5 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 //    Optional<Customer> findByRole(String role);
 
     // Set<Customer> for distinct values to avoid repetitions
-    Set<Customer> findAllByRolesContainingOrderByRoles(Role role); // findAllByRolesContainingOrderByRoles // findDistinctByRolesContainingOrderByRoles
+    Set<Customer> findAllByRolesContainingOrderByRoles(Role role);
 }

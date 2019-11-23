@@ -1,7 +1,7 @@
-package com.tagsoft.registry.service;
+package com.tagsoft.registry.service.customer;
 
-import com.tagsoft.registry.model.Role;
-import com.tagsoft.registry.repository.RoleRepository;
+import com.tagsoft.registry.model.customer.Role;
+import com.tagsoft.registry.repository.customer.RoleRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

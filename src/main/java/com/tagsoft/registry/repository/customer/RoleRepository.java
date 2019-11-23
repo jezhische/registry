@@ -1,6 +1,6 @@
-package com.tagsoft.registry.repository;
+package com.tagsoft.registry.repository.customer;
 
-import com.tagsoft.registry.model.Role;
+import com.tagsoft.registry.model.customer.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

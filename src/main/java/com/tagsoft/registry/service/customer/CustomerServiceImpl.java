@@ -1,11 +1,11 @@
-package com.tagsoft.registry.service;
+package com.tagsoft.registry.service.customer;
 
 import com.tagsoft.registry.constants.RoleEnum;
 import com.tagsoft.registry.model.Contact;
-import com.tagsoft.registry.model.Customer;
-import com.tagsoft.registry.model.Role;
+import com.tagsoft.registry.model.customer.Customer;
+import com.tagsoft.registry.model.customer.Role;
 import com.tagsoft.registry.repository.ContactRepository;
-import com.tagsoft.registry.repository.CustomerRepository;
+import com.tagsoft.registry.repository.customer.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

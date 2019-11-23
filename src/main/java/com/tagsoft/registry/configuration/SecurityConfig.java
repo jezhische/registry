@@ -1,6 +1,7 @@
 package com.tagsoft.registry.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -18,7 +19,7 @@ import javax.sql.DataSource;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final DataSource dataSource;
+    private final DataSource customerDataSource;
 
 //    @Value("${spring.queries.customer-query}")
     private String usersQuery;
@@ -27,11 +28,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public SecurityConfig(BCryptPasswordEncoder bCryptPasswordEncoder,
-                          DataSource dataSource,
+                          @Qualifier("customerDataSource") DataSource customerDataSource,
                           @Value("${spring.queries.customer-query}") String usersQuery,
                           @Value("${spring.queries.roles-query}") String rolesQuery) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.dataSource = dataSource;
+        this.customerDataSource = customerDataSource;
         this.usersQuery = usersQuery;
         this.rolesQuery = rolesQuery;
     }
@@ -41,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.jdbcAuthentication()
                 .usersByUsernameQuery(usersQuery)
                 .authoritiesByUsernameQuery(rolesQuery)
-                .dataSource(dataSource)
+                .dataSource(customerDataSource)
                 .passwordEncoder(bCryptPasswordEncoder);
     }
 

@@ -2,11 +2,11 @@ package com.tagsoft.registry.inmemorydbTest;
 
 import com.tagsoft.registry.constants.RoleEnum;
 import com.tagsoft.registry.model.Contact;
-import com.tagsoft.registry.model.Customer;
-import com.tagsoft.registry.model.Role;
+import com.tagsoft.registry.model.customer.Customer;
+import com.tagsoft.registry.model.customer.Role;
 import com.tagsoft.registry.service.ContactService;
-import com.tagsoft.registry.service.CustomerService;
-import com.tagsoft.registry.service.RoleService;
+import com.tagsoft.registry.service.customer.CustomerService;
+import com.tagsoft.registry.service.customer.RoleService;
 import com.tagsoft.registry.testConfig.BaseH2ConnectingTest;
 import org.hamcrest.Matchers;
 import org.junit.After;

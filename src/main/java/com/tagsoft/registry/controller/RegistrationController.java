@@ -1,9 +1,9 @@
 package com.tagsoft.registry.controller;
 
 import com.tagsoft.registry.model.Contact;
-import com.tagsoft.registry.model.Customer;
+import com.tagsoft.registry.model.customer.Customer;
 import com.tagsoft.registry.service.ContactService;
-import com.tagsoft.registry.service.CustomerService;
+import com.tagsoft.registry.service.customer.CustomerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;

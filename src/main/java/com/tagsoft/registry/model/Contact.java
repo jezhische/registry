@@ -1,5 +1,6 @@
 package com.tagsoft.registry.model;
 
+import com.tagsoft.registry.model.customer.Customer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,45 +19,45 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "contacts")
+//@Entity
+//@Table(name = "contacts")
 public class Contact {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @Column(name = "id")
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id")
-    // @MapsId annotation points out, that the id column serves as both Primary Key and FK
-    @MapsId // simply it means that contact.id == customer.id
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "customer_id")
+//    // @MapsId annotation points out, that the id column serves as both Primary Key and FK
+//    @MapsId // simply it means that contact.id == customer.id
     private Customer customer;
 
-    @Column(name = "name")
+//    @Column(name = "name")
     String name;
 
-    @Column(name = "last_name")
+//    @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "email")
+//    @Column(name = "email")
     private String email;
 
-    @Column(name = "province")
+//    @Column(name = "province")
     private String province;
 
-    @Column(name = "city")
+//    @Column(name = "city")
     private String city;
 
     /**
      * NB: the {@link @ElementCollection} annotation creates new table 'contact_states' in db by Hibernate
      */
-    @ElementCollection
+//    @ElementCollection
     private List<String> states;
 
     /**
      * this is the CRUTCH to fill states list from model
      */
-    @Transient
+//    @Transient
     private String crutch;
 }

@@ -1,10 +1,10 @@
 package com.tagsoft.registry.controller;
 
 import com.tagsoft.registry.model.Contact;
-import com.tagsoft.registry.model.Customer;
+import com.tagsoft.registry.model.customer.Customer;
 import com.tagsoft.registry.model.dto.CustomerDataDTO;
 import com.tagsoft.registry.service.ContactService;
-import com.tagsoft.registry.service.CustomerService;
+import com.tagsoft.registry.service.customer.CustomerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

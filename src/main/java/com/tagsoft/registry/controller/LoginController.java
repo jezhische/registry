@@ -1,6 +1,6 @@
 package com.tagsoft.registry.controller;
 
-import com.tagsoft.registry.model.Customer;
+import com.tagsoft.registry.model.customer.Customer;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

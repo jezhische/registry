@@ -1,9 +1,9 @@
-package com.tagsoft.registry.service;
+package com.tagsoft.registry.service.customer;
 
 
 
-import com.tagsoft.registry.model.Customer;
-import com.tagsoft.registry.model.Role;
+import com.tagsoft.registry.model.customer.Customer;
+import com.tagsoft.registry.model.customer.Role;
 
 import java.util.Set;
 

@@ -1,5 +1,6 @@
-package com.tagsoft.registry.model;
+package com.tagsoft.registry.model.customer;
 
+import com.tagsoft.registry.model.Contact;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,7 +25,9 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "customers",
-uniqueConstraints = @UniqueConstraint(columnNames = "login"))
+// not needed as I create relation with db using EntityManagerFactoryBuilder.packages(Customer.class) method in CustomerDataSourceConfiguration
+        schema = "registry_security",
+        uniqueConstraints = @UniqueConstraint(columnNames = "login"))
 public class Customer {
 
     @Id

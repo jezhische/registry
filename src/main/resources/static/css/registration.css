@@ -1,7 +1,14 @@
+.form-input {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
 .validation-message {
+    display: none;
     font-style: normal;
-    font-size: 12px;
+    font-size: 20px;
     color: #FF1C19;
+    margin-bottom: 5px;
+    margin-top: 5px;
 }
 .selected-style {
     font-weight: bold;
@@ -25,4 +32,8 @@
     border: 3px solid red;
     border-radius: 15px;
     font-stretch: extra-expanded;
+    color: red;
+    margin-left: 10px;
+    width: 5px;
+    height: 5px;
 }

@@ -1,4 +1,5 @@
-export let statesArray = [
+// export
+let statesArray = [
     "Alaska",
     "Alabama",
     "Arkansas",

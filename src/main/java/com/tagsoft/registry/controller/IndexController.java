@@ -50,7 +50,7 @@ public class IndexController {
         CustomerDataDTO customerData = CustomerDataDTO.builder()
                 .country(customer.getCountry())
                 .name(contact.getName())
-                .lastName(contact.getLastName())
+                .surname(contact.getLastName())
                 .email(contact.getEmail())
                 .build();
         if (customerData.getCountry().equalsIgnoreCase("USA"))

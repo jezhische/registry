@@ -18,7 +18,7 @@ import java.util.Set;
 @Component
 public class CustomerDataDTO {
 
-    private String country, name, lastName, email, province, city;
+    private String country, name, surname, email, province, city;
 
     private Set<String> states;
 

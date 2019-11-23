@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
 
 import javax.validation.Valid;
 import java.util.Arrays;
@@ -30,12 +31,19 @@ public class RegistrationController {
      * I could have put there only one CustomerDataDTO instance.
      * @return
      */
+//    @GetMapping(value="/registration")
+//    public ModelAndView registration(){
+//        ModelAndView modelAndView = new ModelAndView();
+//        // create a models attached to page
+//        modelAndView.addObject("customer", new Customer());
+//        modelAndView.addObject("contact", new Contact());
+//        modelAndView.setViewName("registration");
+//        return modelAndView;
+//    }
+
     @GetMapping(value="/registration")
     public ModelAndView registration(){
         ModelAndView modelAndView = new ModelAndView();
-        // create a models attached to page
-        modelAndView.addObject("customer", new Customer());
-        modelAndView.addObject("contact", new Contact());
         modelAndView.setViewName("registration");
         return modelAndView;
     }

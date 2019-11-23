@@ -18,105 +18,112 @@
     <fieldset>
         <legend>Registration Form</legend>
         <div class="row">
-            <form autocomplete="off" action="#" th:action="@{/registration}"
-                  th:object="${customer}" method="post" class="form-horizontal"
-                  role="form">
+            <form autocomplete="off" action="#" method="POST" role="form">
 <!-- ******************************** the left half of the page -->
                 <div class="col-md-6">
                     <div class="form-group">
-                        <div class="col-sm-9">
-                            <label th:if="${#fields.hasErrors('login')}" th:errors="*{login}"
-                                   class="validation-message"></label>
-                            <input type="text" th:field="*{login}" placeholder="Login"
-                                   class="form-control"/>
+                        <div class="col-sm-9 form-input">
+                            <div id="login-error" class="validation-message"></div>
+                            <input type="text" placeholder="Login" id="login" class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-9 form-input">
+                            <div id="password-error" class="validation-message"></div>
+                            <input type="password" id="password" placeholder="Password" class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-9 form-input">
+                            <div id="name-error" class="validation-message"></div>
+                            <input type="text" id="name" placeholder="First Name" class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-9 form-input">
+                            <div id="surname-error" class="validation-message"></div>
+                            <input type="text" id="surname" placeholder="Last Name" class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-9 form-input">
+                            <div id="email-error" class="validation-message"></div>
+                            <input type="text" id="email" placeholder="Email" class="form-control"/>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="col-sm-9">
-                            <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
-                                   class="validation-message"></label>
-                            <input type="password" th:field="*{password}"
-                                   placeholder="Password" class="form-control"/>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-sm-9">
-<!--                            <label th:if="${#fields.hasErrors('name')}" th:errors="${contact.name}"-->
-<!--                                   class="validation-message"></label>-->
-                            <input type="text" th:field="${contact.name}" placeholder="First Name"
-                                   class="form-control"/>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-sm-9">
-<!--                            <label th:if="${#fields.hasErrors('lastName')}" th:errors="${contact.lastName}"-->
-<!--                                   class="validation-message"></label>-->
-                            <input type="text" th:field="${contact.lastName}" placeholder="Last Name"
-                                   class="form-control"/>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-sm-9">
-<!--                            <label th:if="${#fields.hasErrors('email')}" th:errors="${contact.email}"-->
-<!--                                   class="validation-message"></label>-->
-                            <input type="text" th:field="${contact.email}" placeholder="Email"
-                                   class="form-control"/>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label th:if="${#fields.hasErrors('country')}" th:errors="*{country}"
-                               class="validation-message"></label>
-                        <!--                        <label for="country-select" class="col-sm-offset-2">Select_Your_Country</label>-->
-                        <select th:field="*{country}" id="country-select" class="col-sm-6 col-sm-offset-2">
-                            <!--                                <option th:value="a" th:text="Select_Your_Country" th:disabled="disabled" th:selected="true"></option>-->
-
-                            <!--    this option has null value, so will be constrained by @NotEmpty String country in Customer class -->
-                            <option value="" class="selected-style" selected>Select Your Country</option>
-                            <option id="usa" th:value="USA" th:text="USA"></option>
-                            <option id="canada" th:value="Canada" th:text="Canada"></option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="usa-states-select" class="usa-states-select" style="display: none">
-                            Select at least three states that border with yours</label>
-                            <select id="usa-states-select" class="col-sm-6 col-sm-offset-2" style="display: none">
-<!--                                    th:field="${contact.states}">-->
-<!--                                <option th:value="Nebraska" th:text="Nebraska"></option>-->
-<!--                                <option th:value="Arisona" th:text="Arisona"></option>-->
+                            <div id="country-select-error" class="validation-message"></div>
+                            <select id="country-select" class="col-sm-6 col-sm-offset-2 form-input">
+                                <option value="" class="selected-style" selected>Select Your Country</option>
+                                <option value="USA">USA</option>
+                                <option value="Canada">Canada</option>
                             </select>
-
+                        </div>
+                    </div>
+<!--                    SELECT for USA states selection-->
+                    <div class="form-group">
+                        <div id="us-select" class="col-sm-9" style="display: none">
+                            <label for="usa-states-select">
+                                Select at least three states that border with yours
+                            </label>
+                            <div id="usa-states-select-error" class="validation-message"></div>
+                            <select id="usa-states-select" class="col-sm-6 col-sm-offset-2 form-input" style="display: none">
+                                <option value="" class="selected-style" disabled selected>Select states</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--                    SELECT and INPUT for Canada province and city selection-->
+                    <div id="canadian-province-selection" style="display: none">
+                        <div class="form-group">
+                            <div class="col-sm-9">
+                                <label for="canada-province-select" id="label-for-canada-province-select">Select your province</label>
+                                <div id="canada-province-select-error" class="validation-message" style="display: none"></div>
+                                <select id="canada-province-select" class="col-sm-6 col-sm-offset-2 form-input">
+                                    <option value="" class="selected-style" disabled selected>Select your province</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-9">
+                                <label for="canada-city" id="label-for-canada-city">Please input your city</label>
+                                <div id="canada-city-error" class="validation-message" style="display: none"></div>
+                                <input type="text" id="canada-city" placeholder="City" class="col-sm-6 col-sm-offset-2 form-input"/>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="form-group">
                         <div class="col-sm-9">
-                            <button type="submit" class="btn btn-primary btn-block">Register Customer</button>
+                            <button type="submit" id="submit-button" class="btn btn-primary btn-block form-input">Register Customer</button>
                         </div>
                     </div>
 
-                    <h2><span class="text-success" th:utext="${successMessage}"></span></h2>
+                    <div id="success-message" class="text-success" style="display: none"></div>
                 </div>
 <!-- ********************************* the right half of the page -->
                 <div class="col-md-6">
 <!--                    see registration.js listenSelectOnchange()-->
-                    <div id="usa-state-selection"  class="col-md-12 col-md-offset-1" style="display: none">
-
+                    <div id="usa-state-selection"  class="col-md-12 col-md-offset-1 form-input" style="display: none">
                         <div class="col-md-12 registration-header">The states you chose</div>
-<!--                        this is the CRUTCH to fill states list from model-->
-                        <input id="crutch-input" type="text" style="display: none" th:field="${contact.crutch}">
                     </div>
 
-                    <div id="canadian-province-selection" style="display: none">Hi from Canada</div>
+<!--                    <div id="canadian-province-selection" class="form-input" style="display: none">-->
+
+<!--                    </div>-->
                 </div>
             </form>
         </div>
     </fieldset>
 
     <script src="js/registration.js"></script>
+    <script src="js/us-states-array.js"></script>
+    <script src="js/canada-province-array.js"></script>
 </div>
 
 </body>

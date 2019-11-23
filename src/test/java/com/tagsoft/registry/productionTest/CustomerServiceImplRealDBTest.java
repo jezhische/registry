@@ -44,7 +44,7 @@ public class CustomerServiceImplRealDBTest extends BasePostgresConnectingTest {
     @Before
     public void setUp() throws Exception {
         customer = Customer.builder()
-                .login("todoit12") // iamthefirst, iamthesecond
+                .login("todoit13") // iamthefirst, iamthesecond
                 .password("password")
                 .country("USA")
                 .build();
@@ -65,7 +65,7 @@ public class CustomerServiceImplRealDBTest extends BasePostgresConnectingTest {
 // ====================================================================================================================
 
     @Test
-//    @Rollback
+    @Rollback
     public void save() {
         Customer saved = customerService.save(customer);
         Customer byId = customerService.findById(saved.getId());

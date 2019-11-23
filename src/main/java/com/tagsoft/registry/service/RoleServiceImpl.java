@@ -15,6 +15,11 @@ public class RoleServiceImpl implements RoleService {
         this.roleRepository = roleRepository;
     }
 
+    @Override
+    public Role save(Role role) {
+        return roleRepository.saveAndFlush(role);
+    }
+
     /**
      * The method takes String parameter, not {@link Role}, as the {@link RoleRepository#findByRole(String)} method
      * expects String as default JpaRepository method

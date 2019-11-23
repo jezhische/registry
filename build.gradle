@@ -59,8 +59,8 @@ dependencies {
 	testCompile group: 'junit', name: 'junit', version: '4.12'
 	// https://mvnrepository.com/artifact/org.springframework/spring-test
 	testCompile group: 'org.springframework', name: 'spring-test', version: '5.2.1.RELEASE'
-
-
+	// https://mvnrepository.com/artifact/com.h2database/h2
+	testCompile group: 'com.h2database', name: 'h2', version: '1.4.200'
 }
 
 test {

@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {RegistryApplication.class, H2TestProfileJpaConfig.class})
-// to avoid "failed to lazily initialize a collection of role: com.tagsoft.registry.model.Customer.roles, could not initialize proxy - no Session"
+// to avoid "failed to lazily initialize a collection of role: com.tagsoft.registry.model.us.Customer.roles, could not initialize proxy - no Session"
 @Transactional
 @ActiveProfiles("testH2") // see bean config in H2TestProfileJpaConfig
 public class BaseH2ConnectingTest {

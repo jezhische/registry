@@ -3,7 +3,6 @@ package com.tagsoft.registry.service;
 
 import com.tagsoft.registry.model.Role;
 import com.tagsoft.registry.repository.RoleRepository;
-
 public interface RoleService {
 
     Role save(Role role);

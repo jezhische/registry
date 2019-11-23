@@ -44,7 +44,7 @@ public class CustomerServiceImplRealDBTest extends BasePostgresConnectingTest {
     @Before
     public void setUp() throws Exception {
         customer = Customer.builder()
-                .login("todoit11") // iamthefirst, iamthesecond
+                .login("todoit12") // iamthefirst, iamthesecond
                 .password("password")
                 .country("USA")
                 .build();

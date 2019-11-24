@@ -4,26 +4,54 @@
  / PostgreSQL 9 / Hibernate / SQL 
  / Spring Boot Test / Project Lombok / HTML5 / CSS / Thymeleaf / Springfox Swagger.
  </p>
+ <p> Вот нерешенные проблемы. </p>
+ <p>
+ 1. Коллекцию американских штатов и канадских провинций лучше хранить в бд, иначе получается 
+нарушение первой нормальной формы (повторяющиеся строки в таблице). Переделать не успел.</p>
+<p> 2. По неизвестной причине, после того, как я переделал контроллеры под @ResponseBody (модель в 
+формате JSON), post и put-запросы со страниц приходят с пустыми полями модели, хотя когда я перед 
+отсылкой запроса вывожу модель в консоль, поля заполнены. Такие же запросы со Swagger проходят 
+прекрасно, контроллер принимает, обрабатывает, сохраняет, отвечает. Пробовал через fetch(), 
+XMLHttpRequest() и jQuery AJAX - результат один и тот же. В чем дело - не разобрался, только время 
+потерял.
+С get и delete-запросами все нормально.</p>
+<p>3. Сущности с базовым типом Contact (в них хранятся детали профиля) используют наследование. 
+Соответственно, используется наследование репозиториев и сервисов, strategy = 
+InheritanceType.SINGLE_TABLE (это самый простой тип). Как ни удивительно, все работает. 
+Но сделать конфигурацию под разные базы данных не получилось, в JPA и автоконфигурации Spring Boot 
+слишком много заморочек по сравнению с более классическим подходом, когда DataSource 
+конфигурировался вручную. Попытки конфигурации представлены в ветке tryToConfigMultipleDataSource, 
+все вроде должно работать, но почему-то конфигурируются два бина DataSource с одним и тем же типом, 
+и контекст падает.
+<br>
+Согласно стратегии, таблица единая для базового класса и наследников, но появяется 
+колоннка-дискриминатор contact_type, по значению которой Hibernate понимает, с каким классом имеет дело.
  <hr>
- <img src="src\main\resources\static\img\2019-11-21_154453.png" width="90%"/> 
+ <img src="src\main\resources\static\img\1. 2019-11-24_100239.png" width="90%"/>
+
+4. Обработку ошибок добавить не успел (есть немного через джс и отсылку Http-статуса в явных 
+случаях). Валидация работает, и через Hibernate Validator - Thymeleaf - BindingResult, и через джс. 
+На апдейт добавить обработку ошибок не успел.
  <hr>
-<img src="src\main\resources\static\img\2019-11-21_154545.png" width="90%"/> 
+<img src="src\main\resources\static\img\2. 2019-11-24_175037.png" width="90%"/>
+
+5. Логгирования тоже нет, оставлял напоследок, но так и не успел.
+
+6. Авторизация запросов - через получение экземпляра Authentication и добычу из него логина юзера.
+
+7. Основные тесты по сервисам проходят! И на h2, и на продакшн бд с откатом и без отката.
  <hr>
-<img src="src\main\resources\static\img\2019-11-21_154634.png" width="90%"/> 
+<img src="src\main\resources\static\img\3. 2019-11-24_180617.png" width="90%"/>
+</p>
+<br>
+<p>Ну, и соответственно, картинка и поля для пользователей из разных стран - разные.</p>
  <hr>
-<img src="src\main\resources\static\img\2019-11-21_154700.png" width="90%"/> 
+ <img src="src\main\resources\static\img\4. 2019-11-24_175204.png" width="90%"/> 
  <hr>
-<img src="src\main\resources\static\img\2019-11-21_154843.png" width="90%"/> 
+<img src="src\main\resources\static\img\5. 2019-11-24_183653.png" width="90%"/> 
  <hr>
-<img src="src\main\resources\static\img\2019-11-21_203146.png" width="90%"/> 
+<img src="src\main\resources\static\img\6. 2019-11-25_000114.png" width="90%"/> 
  <hr>
- <img src="src\main\resources\static\img\2019-11-21_203243.png" width="90%"/> 
+<img src="src\main\resources\static\img\7. 2019-11-25_000218.png" width="90%"/> 
  <hr>
-<img src="src\main\resources\static\img\2019-11-21_155226.png" width="90%"/> 
- <hr>
-<img src="src\main\resources\static\img\2019-11-21_155618.png" width="90%"/> 
- <hr>
-<img src="src\main\resources\static\img\2019-11-21_155720.png" width="90%"/> 
- <hr>
-<img src="src\main\resources\static\img\2019-11-21_155840.png" width="90%"/> 
- <hr>
+

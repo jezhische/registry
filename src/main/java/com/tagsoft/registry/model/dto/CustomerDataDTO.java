@@ -18,11 +18,11 @@ import java.util.Set;
 @Component
 public class CustomerDataDTO {
 
-    private String country, name, surname, email, province, city;
+    private String login, password, country, name, surname, email, province, city;
 
     private Set<String> states;
 
-    public void setStates(List<String> states) {
+    public void setStates(Set<String> states) {
         if (states != null && states.size() > 0)
         this.states = new HashSet<>(states);
     }

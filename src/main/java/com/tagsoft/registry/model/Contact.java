@@ -6,10 +6,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import java.util.List;
 
 
 /**
@@ -30,7 +31,8 @@ import java.util.List;
  *  contacts table.
  */
 @Data
-@Builder
+//@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -51,12 +53,16 @@ public class Contact {
     private Customer customer;
 
     @Column(name = "name")
+    @NotEmpty
     String name;
 
     @Column(name = "last_name")
+    @NotEmpty
     private String lastName;
 
     @Column(name = "email")
+    @NotEmpty
+    @Email
     private String email;
 
     @Column

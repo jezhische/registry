@@ -1,4 +1,5 @@
-window.onload = function () {
+// window.onload = function () {
+$(function () {
     // import {statesArray} from './us-states-array'
     let states = [];
 
@@ -121,14 +122,16 @@ window.onload = function () {
         let isModelValid = true;
 
         let login = LOGIN.value;
-        if (LOGIN_ERROR.innerHTML.includes('Sorry, such login already exists')) {
-            LOGIN_ERROR.style.display = 'block';
-            isModelValid = false;
-        } else if (login.length < 1) {
+        // if (LOGIN_ERROR.innerHTML.includes('Sorry, such login already exists')) {
+        //     LOGIN_ERROR.style.display = 'block';
+        //     isModelValid = false;
+        // } else
+            if (login.length < 1) {
             LOGIN_ERROR.style.display = 'block';
             LOGIN_ERROR.innerHTML = 'Please input a login';
             isModelValid = false;
         } else {
+            LOGIN_ERROR.innerHTML = '';
             LOGIN_ERROR.style.display = 'none';
             model.login = login;
         }
@@ -195,8 +198,8 @@ window.onload = function () {
             } else {
                 USA_STATES_SELECT_ERROR.style.display = 'none';
                 model.states = states;
-                model.province = '';
-                model.city = '';
+                model.province = ' ';
+                model.city = ' ';
             }
         //  selected country is Canada
         } else {
@@ -218,23 +221,73 @@ window.onload = function () {
             } else {
                 CANADA_CITY_ERROR.style.display = 'none';
                 model.city = city;
-                model.states = '';
+                model.states = ' ';
             }
         }
 
         if (!isModelValid) return;
-        // else alert(JSON.stringify(model));
 
         // if the model fields filled correctly, then try to post model to server
-        else {let promise = await fetch('registration', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json;charset=utf-8'},
-                body: JSON.stringify(model)
-            });
-            let result = await promise.json();
-        }
+        console.log(JSON.stringify(model));
+            // let promise = await fetch('registration', {
+            //     method: 'POST',
+            //     headers: {'Content-Type': 'application/json;charset=utf-8'},
+            //     body: JSON.stringify(model)
+            // });
+            // let result = await promise.text();
+            // if (promise.ok) {
+            //     SUCCESS_MESSAGE.innerHTML = result.text();
+            //     SUCCESS_MESSAGE.style.display = 'block';
+            // } else if (promise.status === 409) {
+            //     LOGIN_ERROR.innerHTML = result + ': ' + promise.status;
+            //     LOGIN_ERROR.style.display = 'block';
+            //     // return;
+            // } else if (!promise.ok) {
+            //     SUCCESS_MESSAGE.innerHTML = 'Something went wrong: ' + promise.status;
+            //     SUCCESS_MESSAGE.style.display = 'block';
+            // }
+
+//             new Promise(function (resolve, reject) {
+//                 let xhr = new XMLHttpRequest();
+//                 xhr.open('POST', 'registration', true);
+//                 xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+//                 xhr.responseType = 'text';
+//                 xhr.timeout = 10000;
+//                 xhr.onload = function() {
+//                     if(xhr.status >= 200 && xhr.status < 300) resolve(xhr.response);
+//                     else reject({status: xhr.status, statustext: xhr.statusText});
+//                 };
+//                 xhr.onerror = () => reject(`Something went wrong: status ${xhr.status}, reason: ${xhr.statusText}`);
+//                 // xhr.send(JSON.stringify(model));
+//                 xhr.send(JSON.stringify(jsonmodel));
+// // since result is array of json objects
+//             }).then(value => value.forEach(item => appendProductJoinProductImageShowTableRow(table, item)))
+//                 .then(() => // after table row appended, move the form field to the bottom position (arg false)
+//                     form.scrollIntoView(false))
+//                 .catch(reason => {
+//                     errorText.innerHTML = `An error occured: status ${reason.status}, reason: ${reason.statusText}`;
+//                     errorText.style.display = 'block';
+//                     form.scrollIntoView(false);
+//                 });
+
+        $.ajax({
+            type: 'post',
+            contentType: "application/json; charset=utf-8",
+            url: 'registration',
+            data: JSON.stringify(model),
+            dataType: 'text',
+            success: function (result, status, jqXHR) {
+                SUCCESS_MESSAGE.innerHTML = result;
+                SUCCESS_MESSAGE.style.display = 'block';
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                SUCCESS_MESSAGE.innerHTML = jqXHR.responseText;
+                SUCCESS_MESSAGE.style.display = 'block';
+            }
+        });
     }
 
     fillStatesSelect();
     fillProvincesSelect();
-};
+// };
+});

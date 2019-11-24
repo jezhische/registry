@@ -231,10 +231,3 @@ button.hack-btn:active {
     font-size: 180%;
 }
 
-.profile {
-    display: none;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-weight: bold;
-    font-size: 20px;
-    color: #00a45f;
-}

@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="bootstrap3.3.7/css/bootstrap.css"/>
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>-->
     <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+    <script src="js/jquery-3.3.1.js"></script>
 </head>
 <body>
 <form th:action="@{/login}" method="get">
@@ -104,7 +105,7 @@
                         </div>
                     </div>
 
-                    <div id="success-message" class="text-success" style="display: none"></div>
+                    <div id="success-message" class="text-success col-sm-9" style="display: none"></div>
                 </div>
 <!-- ********************************* the right half of the page -->
                 <div class="col-md-6">
@@ -120,11 +121,11 @@
             </form>
         </div>
     </fieldset>
-
+</div>
     <script src="js/registration.js"></script>
     <script src="js/us-states-array.js"></script>
     <script src="js/canada-province-array.js"></script>
-</div>
+
 
 </body>
 </html>

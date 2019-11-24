@@ -4,6 +4,9 @@ import com.tagsoft.registry.constants.RoleEnum;
 import com.tagsoft.registry.model.Contact;
 import com.tagsoft.registry.model.Customer;
 import com.tagsoft.registry.model.Role;
+import com.tagsoft.registry.model.canada.CanadaContact;
+import com.tagsoft.registry.model.us.USContact;
+import com.tagsoft.registry.repository.ContactRepository;
 import com.tagsoft.registry.service.ContactService;
 import com.tagsoft.registry.service.CustomerService;
 import com.tagsoft.registry.service.RoleService;
@@ -11,6 +14,7 @@ import com.tagsoft.registry.testConfig.BasePostgresConnectingTest;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -19,8 +23,8 @@ import org.springframework.test.annotation.Rollback;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
 
 import static org.junit.Assert.*;
 
@@ -34,39 +38,52 @@ public class CustomerServiceImplRealDBTest extends BasePostgresConnectingTest {
 
     @Autowired
     private ContactService contactService;
+    @Autowired
+    private ContactRepository contactRepository;
 
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private Customer customer;
-    private Contact contact;
+    private Contact uSContact;
+    private Contact canadaContact;
 
     @Before
     public void setUp() throws Exception {
         customer = Customer.builder()
-                .login("todoit13") // iamthefirst, iamthesecond
+                .login("todoit16") // iamthefirst, iamthesecond
                 .password("password")
-                .country("USA")
                 .build();
-        contact = Contact.builder()
+        uSContact = USContact.builder()
                 .customer(customer)
-                .email("example@test.com")
-                .name("ivan")
+                .country("USA")
+                .email("us@test.com")
+                .name("Ivan")
                 .lastName("Kindofjunior")
-                .states(new ArrayList<>(Arrays.asList("Nevada", "Alaska")))
+                .states(new HashSet<>(Arrays.asList("Nevada", "Alaska")))
+                .build();
+        canadaContact = CanadaContact.builder()
+                .customer(customer)
+                .country("Canada")
+                .email("canada@test.com")
+                .name("john")
+                .lastName("WishIWere")
+                .province("Saskatchewan")
+                .city("Toronto")
                 .build();
     }
 
     @After
     public void tearDown() throws Exception {
         customer = null;
-        contact = null;
+        uSContact = null;
+        canadaContact = null;
     }
 // ====================================================================================================================
 
     @Test
     @Rollback
-    public void save() {
+    public void saveWithoutContact() {
         Customer saved = customerService.save(customer);
         Customer byId = customerService.findById(saved.getId());
         assertEquals(saved, byId);
@@ -77,11 +94,11 @@ public class CustomerServiceImplRealDBTest extends BasePostgresConnectingTest {
 
     @Test
     @Rollback
-    public void saveCustomerOTOContact() throws Exception {
+    public void saveCustomer_OTO_USContact() throws Exception {
         Customer savedCustomer = customerService.save(customer);
         Customer byId = customerService.findById(savedCustomer.getId());
         assertEquals(savedCustomer, byId);
-        Contact savedContact = contactService.save(contact);
+        Contact savedContact = contactService.save(uSContact);
         Contact contactById = contactService.findById(savedContact.getId()).orElse(new Contact());
         assertEquals(savedContact, contactById);
         assertEquals(savedContact.getId(), savedCustomer.getId());
@@ -89,16 +106,41 @@ public class CustomerServiceImplRealDBTest extends BasePostgresConnectingTest {
 
     @Test
     @Rollback
+    public void saveCustomer_OTO_CanadaContact() throws Exception {
+        Customer savedCustomer = customerService.save(customer);
+        Customer byId = customerService.findById(savedCustomer.getId());
+        assertEquals(savedCustomer, byId);
+        Contact savedContact = contactService.save(canadaContact);
+        Contact contactById = contactService.findById(savedContact.getId()).orElse(new Contact());
+        assertEquals(savedContact, contactById);
+        assertEquals(savedContact.getId(), savedCustomer.getId());
+    }
+
+
+    @Test
+    public void comparePassword() {
+        Customer ivan = customerService.findByLogin("todoit13");
+        assertTrue(bCryptPasswordEncoder.matches("password", ivan.getPassword()));
+    }
+
+    /**
+     * to don't obtain ConstraintViolationException in the last line -
+     * see {@link com.tagsoft.registry.service.CustomerServiceImpl#deleteByLogin(String)} comments
+     */
+    @Test
+    @Rollback
     public void deleteOrphanContact() {
         Customer savedCustomer = customerService.save(customer);
         Customer byId = customerService.findById(savedCustomer.getId());
         assertEquals(savedCustomer, byId);
-        Contact savedContact = contactService.save(contact);
+        Contact savedContact = contactService.save(uSContact);
         Contact contactById = contactService.findById(savedContact.getId()).orElse(new Contact());
         assertEquals(savedContact, contactById);
+        // @MapsId checking
         assertEquals(savedContact.getId(), savedCustomer.getId());
         Long id = customer.getId();
         customerService.deleteByLogin(customer.getLogin());
+        // check that both customer and contact were deleted
         assertNull(customerService.findById(id));
         assertEquals(contactService.findById(id), Optional.empty());
     }
@@ -110,38 +152,54 @@ public class CustomerServiceImplRealDBTest extends BasePostgresConnectingTest {
     @Rollback
     @Test(expected = DataIntegrityViolationException.class)
     public void loginUniqueConstraint() {
+        String login = contactRepository.findAll().get(0).getCustomer().getLogin();
+        customer.setLogin(login);
         customerService.save(customer);
+    }
+
+
+    @Test
+    @Rollback
+    public void findByLogin() {
+        Customer fromDB = contactRepository.findAll().get(0).getCustomer();
+        Customer byLogin = customerService.findByLogin(fromDB.getLogin());
+        assertEquals(fromDB.getLogin(), byLogin.getLogin());
+        System.out.println("************************************" + byLogin);
+    }
+
+    @Test
+    public void findAdminRole() {
+        assertEquals(RoleEnum.ADMIN.toString(), roleService.findByRole(RoleEnum.ADMIN.toString()).getRole());
     }
 
     @Test
     @Rollback
     public void addRole() {
-        customerService.findByLogin(customer.getLogin()).addRoles(roleService.findByRole(RoleEnum.CUSTOMER.toString()));
-        assertTrue(customerService.findByLogin(customer.getLogin()).getRoles().contains(
-                roleService.findByRole(RoleEnum.CUSTOMER.toString())
+        String login = contactRepository.findAll().get(0).getCustomer().getLogin();
+        assertFalse(customerService.findByLogin(login).getRoles().contains(
+                roleService.findByRole(RoleEnum.ADMIN.toString())));
+        customerService.findByLogin(login).addRoles(roleService.findByRole(RoleEnum.ADMIN.toString()));
+        assertTrue(customerService.findByLogin(login).getRoles().contains(
+                roleService.findByRole(RoleEnum.ADMIN.toString())
         ));
     }
 
     @Test
     @Rollback
-    public void findByLogin() {
-        Customer byLogin = customerService.findByLogin(customer.getLogin());
-        assertEquals(customer.getLogin(), byLogin.getLogin());
-        System.out.println("************************************" + byLogin);
-    }
-
-    @Test
-    @Rollback
     public void findById() {
-        Customer byLogin = customerService.findByLogin(customer.getLogin());
+        String login = contactRepository.findAll().get(0).getCustomer().getLogin();
+        Customer byLogin = customerService.findByLogin(login);
         Customer byId = customerService.findById(byLogin.getId());
-        assertEquals(customer.getLogin(), byId.getLogin());
+        // why don't?
+//        assertEquals(byLogin, byId);
+        assertEquals(byLogin.getId(), byId.getId());
     }
 
     @Test
     @Rollback
     public void putWithEnabledFalse() {
-        Customer byLogin = customerService.findByLogin(customer.getLogin());
+        String login = contactRepository.findAll().get(0).getCustomer().getLogin();
+        Customer byLogin = customerService.findByLogin(login);
         byLogin.setEnabled(false);
         customerService.update(byLogin);
         assertFalse(byLogin.isEnabled());
@@ -149,26 +207,12 @@ public class CustomerServiceImplRealDBTest extends BasePostgresConnectingTest {
 // =========================================================================================================== end bunch
 // =====================================================================================================================
 
-
-
-    @Test
-    @Rollback
-    public void deleteByLogin() {
-        assertNotNull(customerService.findByLogin(customer.getLogin()));
-        Set<Customer> customers = customerService.findAllByRolesContainingOrderByRoles(roleService.findByRole(RoleEnum.CUSTOMER.toString()));
-        assertTrue(customers.contains(customerService.findByLogin(customer.getLogin())));
-        customerService.deleteByLogin(customer.getLogin());
-        assertNull(customerService.findByLogin(customer.getLogin()));
-        customers = customerService.findAllByRolesContainingOrderByRoles(roleService.findByRole(RoleEnum.CUSTOMER.toString()));
-        customers.addAll(customerService.findAllByRolesContainingOrderByRoles(roleService.findByRole(RoleEnum.ADMIN.toString())));
-        assertTrue(!customers.contains(customerService.findByLogin(customer.getLogin())));
-    }
-
 // =====================================================================================================================
 // ======================================================================================================== special
 
-    @Test
-    @Rollback
+//    @Test
+//    @Rollback
+//    @Ignore
     public void deleteCertainCustomer() {
         String certainLogin = "jezhische";
         assertNotNull(customerService.findByLogin(certainLogin));
@@ -176,8 +220,9 @@ public class CustomerServiceImplRealDBTest extends BasePostgresConnectingTest {
         assertNull(customerService.findByLogin(certainLogin));
     }
 
-    @Test
-    @Rollback
+//    @Test
+//    @Rollback
+//    @Ignore
     public void putCertainCustomerEnabledTrue() {
         Customer jezhische = customerService.findByLogin("jezhische");
         jezhische.setEnabled(true);
@@ -185,15 +230,9 @@ public class CustomerServiceImplRealDBTest extends BasePostgresConnectingTest {
         assertTrue(customerService.findByLogin(jezhische.getLogin()).isEnabled());
     }
 
-    @Test
-    public void comparePassword() {
-        Customer jezhische = customerService.findByLogin("jezhische");
-        System.out.println("**********************************************" +
-                bCryptPasswordEncoder.matches("password", jezhische.getPassword()));
-    }
-
-    @Test
-    @Rollback
+//    @Test
+//    @Rollback
+//    @Ignore
     public void setAdminAuthority() {
         Customer jezhische = customerService.findByLogin("jezhische");
         Role admin = roleService.findByRole(RoleEnum.ADMIN.toString());
@@ -206,8 +245,9 @@ public class CustomerServiceImplRealDBTest extends BasePostgresConnectingTest {
         assertTrue(customerService.findByLogin("jezhische").getRoles().contains(admin));
     }
 
-    @Test
-    @Rollback
+//    @Test
+//    @Rollback
+//    @Ignore
     public void deleteAdminAuthority() {
         Customer jezhische = customerService.findByLogin("jezhische");
         Role admin = roleService.findByRole(RoleEnum.ADMIN.toString());

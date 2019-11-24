@@ -1,20 +1,25 @@
 package com.tagsoft.registry.model.us;
 
 import com.tagsoft.registry.model.Contact;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.List;
+import java.util.Set;
 
 /**
  * subclass {@code USContact} table Primary Key is also a Foreign Key to the base class {@link Contact} Primary Key
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Builder
+//@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -26,5 +31,7 @@ public class USContact extends Contact {
      * NB: the {@link ElementCollection} annotation creates new table 'contact_states' in db by Hibernate
      */
     @ElementCollection
-    private List<String> states;
+//    @NotEmpty
+//    @Size(min = 3)
+    private Set<String> states;
 }

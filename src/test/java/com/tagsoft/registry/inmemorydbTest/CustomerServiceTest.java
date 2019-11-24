@@ -4,6 +4,8 @@ import com.tagsoft.registry.constants.RoleEnum;
 import com.tagsoft.registry.model.Contact;
 import com.tagsoft.registry.model.Customer;
 import com.tagsoft.registry.model.Role;
+import com.tagsoft.registry.model.canada.CanadaContact;
+import com.tagsoft.registry.model.us.USContact;
 import com.tagsoft.registry.service.ContactService;
 import com.tagsoft.registry.service.CustomerService;
 import com.tagsoft.registry.service.RoleService;
@@ -17,6 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 
 import static org.junit.Assert.*;
 
@@ -34,33 +37,45 @@ public class CustomerServiceTest extends BaseH2ConnectingTest {
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private Customer customer;
-    private Contact contact;
+    private Contact uSContact;
+    private Contact canadaContact;
 
     @Before
     public void setUp() throws Exception {
         customer = Customer.builder()
                 .login("tt2") // iamthefirst
                 .password("password")
-                .country("USA")
                 .build();
-        contact = Contact.builder()
+        uSContact = USContact.builder()
                 .customer(customer)
-                .email("example@test.com")
+                .country("USA")
+                .email("us@test.com")
                 .name("ivan")
                 .lastName("Kindofjunior")
-                .states(new ArrayList<>(Arrays.asList("Nevada", "Alaska")))
+                .states(new HashSet<>(new ArrayList<>(Arrays.asList("Nevada", "Alaska"))))
                 .build();
+        canadaContact = CanadaContact.builder()
+                .customer(customer)
+                .country("Canada")
+                .email("canada@test.com")
+                .name("John")
+                .lastName("WishIWere")
+                .province("Saskatchewan")
+                .city("Toronto")
+                .build();
+
     }
 
     @After
     public void tearDown() throws Exception {
         customer = null;
-        contact = null;
+        uSContact = null;
+        canadaContact = null;
     }
 // ====================================================================================================================
 
     @Test
-    public void save() {
+    public void saveWithoutContact() {
         roleService.save(Role.builder().role(RoleEnum.CUSTOMER.toString()).build());
         Customer saved = customerService.save(customer);
         Customer byId = customerService.findById(saved.getId());

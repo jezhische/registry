@@ -58,13 +58,22 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.saveAndFlush(customer);
     }
 
+    /**
+     * To don't obtain DataIntegrityViolationException <= ConstraintViolationException:
+     *  PSQLException: ERROR: update or delete on table "customers" violates foreign key constraint
+     *  "fk7fn6qgtowm81subo3un6k5yoq" on table "contacts" : Key (id)=(68) is still referenced from table "contacts"
+     *  - THE DELETING ORDER OF TWO LAST LINES MUST BE RIGHT AS FOLLOWING
+     *  <p>see also CustomerServiceImplRealDBTest#deleteOrphanContact()</p>
+     * @param login
+     */
     @Override
     public void deleteByLogin(String login) {
         Customer customer = customerRepository.findByLogin(login);
         Contact contact = contactRepository.findById(customer.getId()).orElse(null);
         if (contact != null) contact.setCustomer(null);
-        customerRepository.delete(customer);
+
         contactRepository.delete(contact);
+        customerRepository.delete(customer);
     }
 
     @Override

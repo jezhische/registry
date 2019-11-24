@@ -113,7 +113,7 @@ window.onload = function () {
     };
 
     /**
-     * Validation of the form fields and either error message output or creating model and post it to server
+     * Validation of the form fields and either error message output or filling model fields and post it to the server
      * @return {Promise<void>}
      */
     async function doOnSubmit() {
@@ -223,13 +223,16 @@ window.onload = function () {
         }
 
         if (!isModelValid) return;
-        else alert(JSON.stringify(model));
-        // let promise = await fetch('registration', {
-        //     method: 'POST',
-        //     headers: {'Content-Type': 'application/json;charset=utf-8'},
-        //     body: JSON.stringify(model)
-        // });
-        // let result = await promise.json();
+        // else alert(JSON.stringify(model));
+
+        // if the model fields filled correctly, then try to post model to server
+        else {let promise = await fetch('registration', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json;charset=utf-8'},
+                body: JSON.stringify(model)
+            });
+            let result = await promise.json();
+        }
     }
 
     fillStatesSelect();

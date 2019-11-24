@@ -13,10 +13,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * This class represents customer as "user" with the required attributes: login, password and enabled.
+ * This class represents customer as "user" with the required attributes: login, password, roles and enabled.
  * <p>All the customer details are contained in the {@link Contact} class, that relies with {@code Customer}
- * by the common id, i.e. includes @interface {@link MapsId} Customer customer (in this case it means that @MapsId
- * provides the mapping for a simple primary key of the parent entity Customer)</p>
+ * by the common id as one-to-one relation, i.e. includes @interface {@link MapsId} Customer customer (in this case
+ * it means that @MapsId provides the mapping for a simple primary key of the parent entity Customer)</p>
  */
 @Data
 @Builder
@@ -52,10 +52,6 @@ public class Customer {
             joinColumns = @JoinColumn(name = "customer_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
-
-    @Column
-    @NotEmpty(message = "*Please select your country")
-    private String country;
 
     // contact id will be the same as customer id, so it doesn't need to add "contact" column
 

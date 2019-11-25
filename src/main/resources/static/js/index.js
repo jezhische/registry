@@ -30,6 +30,7 @@ window.onload = function () {
         VIEW_PROFILE_BTN.onclick = async function (event) {
             event.preventDefault();
             VIEW_PROFILE_ERROR_TEXT.style.display = 'none';
+            USA_STATE_SELECTION.style.display = 'none';
             console.log('VIEW_PROFILE clicked');
             let response = await fetch('index/customer-data', {method: 'GET'});
         //    as I get Promise instance:
@@ -91,6 +92,10 @@ window.onload = function () {
 // ==============================================================================================================
         EDIT_PROFILE_BTN.onclick = function (event) {
             event.preventDefault();
+            states = [];
+            for (let i = 1; i < USA_STATE_SELECTION.children.length; i++) {
+                USA_STATE_SELECTION.children[i].style.display = 'none';
+            }
             name = customer.name;
             NAME.innerHTML = '<input type="text" value="' + name + '" class="col-sm-6 col-sm-offset-1"/>';
             surname = customer.surname;

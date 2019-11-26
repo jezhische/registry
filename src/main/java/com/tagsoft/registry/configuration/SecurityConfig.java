@@ -20,26 +20,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final DataSource dataSource;
 
-//    @Value("${spring.queries.customer-query}")
-    private String usersQuery;
-//    @Value("${spring.queries.roles-query}")
+    private String customerQuery;
     private String rolesQuery;
 
     @Autowired
     public SecurityConfig(BCryptPasswordEncoder bCryptPasswordEncoder,
                           DataSource dataSource,
-                          @Value("${spring.queries.customer-query}") String usersQuery,
+                          @Value("${spring.queries.customer-query}") String customerQuery,
                           @Value("${spring.queries.roles-query}") String rolesQuery) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.dataSource = dataSource;
-        this.usersQuery = usersQuery;
+        this.customerQuery = customerQuery;
         this.rolesQuery = rolesQuery;
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
-                .usersByUsernameQuery(usersQuery)
+                .usersByUsernameQuery(customerQuery)
                 .authoritiesByUsernameQuery(rolesQuery)
                 .dataSource(dataSource)
                 .passwordEncoder(bCryptPasswordEncoder);
@@ -52,7 +50,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 authorizeRequests()
                 .antMatchers( "/login", "/registration").permitAll()
                 .antMatchers("/free-access").permitAll()
-                .antMatchers("/product-images-uploads/**").hasAuthority("ADMIN")
+                // do not implemented yet
+                .antMatchers("/edit-data/**").hasAuthority("ADMIN")
                 .antMatchers("/index/**").hasAnyAuthority("ADMIN", "CUSTOMER")
                 .anyRequest()
                 .authenticated()

@@ -5,9 +5,10 @@
 <head>
     <meta charset="UTF-8">
     <title>index</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}"/>
+    <link rel="stylesheet" type="text/css" href="css/login.css"/>
     <link rel="stylesheet" type="text/css" href="css/index.css">
     <link rel="stylesheet" type="text/css" href="css/registration.css">
+    <link rel="stylesheet" type="text/css" href="css/modal.css"/>
     <link rel="stylesheet" type="text/css" href="bootstrap3.3.7/css/bootstrap.css"/>
     <script src="js/jquery-3.3.1.js"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/css/inner-styles.css}">
@@ -67,7 +68,12 @@
         <div id="success-message" style="display: none"></div>
     </div>
 </div>
+<div class="modal">
+    <button class="modal-close">x</button>
+    <div class="modal-window">
 
+    </div>
+</div>
 
 <script src="js/index.js"></script>
 <script src="js/canada-province-array.js"></script>

@@ -26,8 +26,9 @@ $(function () {
     const CANADA_CITY_ERROR = document.querySelector('#canada-city-error');
     const SUBMIT_BUTTON = document.querySelector('#submit-button');
     const SUCCESS_MESSAGE = document.querySelector('#success-message');
+    const MODAL = document.querySelector('.modal');
 
-
+    window.onclick = (event) => MODAL.style.display = 'none';
 
     function listenUSA() {
         CANADIAN_PROVINCE_SELECTION.style.display = 'none';
@@ -281,8 +282,10 @@ $(function () {
                 SUCCESS_MESSAGE.style.display = 'block';
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                SUCCESS_MESSAGE.innerHTML = jqXHR.responseText;
-                SUCCESS_MESSAGE.style.display = 'block';
+                // SUCCESS_MESSAGE.innerHTML = jqXHR.responseText;
+                // SUCCESS_MESSAGE.style.display = 'block';
+                MODAL.style.display = 'flex';
+                MODAL.lastElementChild.innerHTML = jqXHR.responseText;
             }
         });
     }

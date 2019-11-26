@@ -24,7 +24,10 @@ window.onload = function () {
     const DELETE = document.querySelector('#delete');
     const USA_STATE_SELECTION = document.querySelector('#usa-state-selection');
     const SUCCESS_MESSAGE = document.querySelector('#success-message');
+    const MODAL = document.querySelector('.modal');
     let CANADA_PROVINCE_SELECT;
+
+    window.onclick = (event) => MODAL.style.display = 'none';
 
     // function getProfileOnButtonClick() {
         VIEW_PROFILE_BTN.onclick = async function (event) {
@@ -201,13 +204,19 @@ window.onload = function () {
                     headers: {'Content-Type': 'application/json;charset=utf-8'},
                     body: JSON.stringify(customer)
                 });
-                let result = await promise.text();
+                // let result = await promise.text();
                 if (promise.ok) {
-                    SUCCESS_MESSAGE.innerHTML = result.text();
+                    SUCCESS_MESSAGE.innerHTML = await promise.text();
                     SUCCESS_MESSAGE.style.display = 'block';
                 } else if (!promise.ok) {
-                    SUCCESS_MESSAGE.innerHTML = 'Something went wrong: ' + promise.status;
-                    SUCCESS_MESSAGE.style.display = 'block';
+                    // SUCCESS_MESSAGE.innerHTML = `Something went wrong: ${promise.status} : ${await promise.text()}`;
+                    // SUCCESS_MESSAGE.style.display = 'block';
+                    MODAL.style.display = 'flex';
+                    let apiExceptionDetails = await promise.json();
+                    let message = `Something went wrong:  : ${promise.status} : ${apiExceptionDetails.status} : ${apiExceptionDetails.message}}`;
+                    console.log(message);
+                    MODAL.lastElementChild.innerHTML = message;
+
                 }
 
                 viewProfile(customer);
@@ -227,7 +236,7 @@ window.onload = function () {
                       // body: JSON.stringify({id: '5bdcdfa40f0a326f858feae0'})
                   })
                       .then(res => res.text())
-                      .then(res => console.log(res))
+                      .then(message => console.log(message))
                       .then(setTimeout(() => window.location.href = 'login', 2000));
               }
             }

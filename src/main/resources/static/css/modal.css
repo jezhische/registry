@@ -1,0 +1,48 @@
+.modal {
+    display: none;
+    width: 70%;
+    height: 70vh;
+    background-color: rgba(0, 0, 0, .2);
+    position: relative;
+    margin-left: 5vw;
+    margin-top: 5vh;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    justify-content: flex-start;
+}
+
+.modal .modal-window {
+    display: flex;
+    width: 70%;
+    height: 70%;
+    position: relative;
+    margin-left: 10%;
+    margin-top: 10%;
+    padding: 10px;
+    background: rgba(0, 50, 100, 0.4);
+    color: red;
+    /*font-size: 20px;*/
+    overflow: auto;
+    /*cross-axis aligning, here it's for vertical one, 'cause flex-direction = row*/
+    align-items: center;
+    /*for several rows:*/
+    align-content: space-around;
+    /*main-axis aligning (horizontal one)*/
+    justify-content: center; /*space-between;*/
+}
+
+.modal-close {
+    position: absolute;
+    align-items: center;
+    top: 20px;
+    right: 20px;
+    width: 80px;
+    height: 80px;
+    border: solid 3px white;
+    border-radius: 50%;
+    background: transparent;
+    color: white;
+    font-size: 40px;
+    cursor: pointer;
+}
